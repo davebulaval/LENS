@@ -101,7 +101,7 @@ class CometModel(ptl.LightningModule, metaclass=abc.ABCMeta):
         train_data: Optional[str] = None,
         validation_data: Optional[str] = None,
         load_weights_from_checkpoint: Optional[str] = None,
-        class_identifier: Optional[str] = None
+        class_identifier: Optional[str] = None,
     ) -> None:
         super().__init__()
         self.save_hyperparameters(
@@ -194,7 +194,7 @@ class CometModel(ptl.LightningModule, metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def forward(self, *args, **kwargs) -> Dict[str, torch.Tensor]:
         pass
-    
+
     @abc.abstractmethod
     def is_referenceless(self) -> bool:
         pass
@@ -259,7 +259,6 @@ class CometModel(ptl.LightningModule, metaclass=abc.ABCMeta):
     def compute_sentence_embedding(
         self, input_ids: torch.Tensor, attention_mask: torch.Tensor
     ) -> torch.Tensor:
-
         encoder_out = self.encoder(input_ids, attention_mask)
         if self.layerwise_attention:
             # HACK: LayerNorm is applied at the MiniBatch. This means that for big batch sizes the variance
@@ -404,7 +403,6 @@ class CometModel(ptl.LightningModule, metaclass=abc.ABCMeta):
         self.log_dict(self.val_metrics.compute(), prog_bar=True)
         self.train_metrics.reset()
         self.val_metrics.reset()
-        
 
     def setup(self, stage) -> None:
         """Data preparation function called before training by Lightning.
@@ -529,7 +527,7 @@ class CometModel(ptl.LightningModule, metaclass=abc.ABCMeta):
                 logger=False,
                 callbacks=[PredictProgressBar()],
                 accelerator=accelerator,
-                max_epochs=-1
+                max_epochs=-1,
             )
         else:
             trainer = ptl.Trainer(
@@ -538,7 +536,7 @@ class CometModel(ptl.LightningModule, metaclass=abc.ABCMeta):
                 logger=False,
                 progress_bar_refresh_rate=0,
                 accelerator=accelerator,
-                max_epochs=-1
+                max_epochs=-1,
             )
 
         # TODO:

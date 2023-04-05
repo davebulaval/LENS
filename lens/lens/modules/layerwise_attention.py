@@ -81,7 +81,6 @@ class LayerwiseAttention(torch.nn.Module):
         tensors: List[torch.Tensor],  # pylint: disable=arguments-differ
         mask: torch.Tensor = None,
     ) -> torch.Tensor:
-
         if len(tensors) != self.num_layers:
             raise Exception(
                 "{} tensors were passed, but the module was initialized to \

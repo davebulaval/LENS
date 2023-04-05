@@ -107,7 +107,7 @@ class RegressionMetricMultiReference(CometModel):
     def init_metrics(self):
         self.train_metrics = RegressionMetrics(prefix="train")
         self.val_metrics = RegressionMetrics(prefix="val")
-    
+
     def is_referenceless(self) -> bool:
         return False
 
@@ -172,7 +172,7 @@ class RegressionMetricMultiReference(CometModel):
             return inputs
 
         all_inputs = []
-        for src, mt, refs in zip(sample['src'], sample['mt'], sample['ref']):
+        for src, mt, refs in zip(sample["src"], sample["mt"], sample["ref"]):
             refs = refs.split("\t")
             num_refs = len(refs)
             src = [src] * num_refs
@@ -205,7 +205,15 @@ class RegressionMetricMultiReference(CometModel):
         prod_src = mt_sentemb * src_sentemb
 
         embedded_sequences = torch.cat(
-            (src_sentemb, mt_sentemb, ref_sentemb, prod_ref, diff_ref, prod_src, diff_src),
+            (
+                src_sentemb,
+                mt_sentemb,
+                ref_sentemb,
+                prod_ref,
+                diff_ref,
+                prod_src,
+                diff_src,
+            ),
             dim=1,
         )
         return {"score": self.estimator(embedded_sequences)}
@@ -257,15 +265,15 @@ class RegressionMetricMultiReference(CometModel):
         batch_input, batch_target = batch
         new_batch_target = []
         batch_prediction = []
-        for one_sample, target in zip(batch_input, batch_target['score']):
+        for one_sample, target in zip(batch_input, batch_target["score"]):
             prediction = self.forward(**one_sample)
-            topk = torch.topk(prediction['score'].view(-1), K).values
+            topk = torch.topk(prediction["score"].view(-1), K).values
             topk_target = target.repeat(K)
             batch_prediction.append(topk)
             new_batch_target.append(topk_target)
 
-        batch_prediction = {'score': torch.hstack(batch_prediction)}
-        new_batch_target = {'score': torch.hstack(new_batch_target)}
+        batch_prediction = {"score": torch.hstack(batch_prediction)}
+        new_batch_target = {"score": torch.hstack(new_batch_target)}
         loss_value = self.compute_loss(batch_prediction, new_batch_target)
 
         if (
@@ -297,15 +305,15 @@ class RegressionMetricMultiReference(CometModel):
 
         new_batch_target = []
         batch_prediction = []
-        for one_sample, target in zip(batch_input, batch_target['score']):
+        for one_sample, target in zip(batch_input, batch_target["score"]):
             prediction = self.forward(**one_sample)
-            topk = torch.topk(prediction['score'].view(-1), K).values
+            topk = torch.topk(prediction["score"].view(-1), K).values
             topk_target = target.repeat(K)
             batch_prediction.append(topk)
             new_batch_target.append(topk_target)
 
-        batch_prediction = {'score': torch.hstack(batch_prediction)}
-        new_batch_target = {'score': torch.hstack(new_batch_target)}
+        batch_prediction = {"score": torch.hstack(batch_prediction)}
+        new_batch_target = {"score": torch.hstack(new_batch_target)}
         loss_value = self.compute_loss(batch_prediction, new_batch_target)
         batch_target = new_batch_target
         self.log("val_loss", loss_value, on_step=True, on_epoch=True)

@@ -25,7 +25,6 @@ str2model = {
 }
 
 
-
 def load_from_checkpoint(checkpoint_path: str) -> CometModel:
     """Loads models from a checkpoint path.
     :param checkpoint_path: Path to a model checkpoint.

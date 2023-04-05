@@ -51,7 +51,6 @@ class RegressionMetrics(Metric):
         self.add_state("target", default=[], dist_reduce_fx="cat")
         self.prefix = prefix
 
-        
     def update(self, preds: Tensor, target: Tensor) -> None:  # type: ignore
         """Update state with predictions and targets.
         Args:
@@ -62,7 +61,7 @@ class RegressionMetrics(Metric):
         self.target.append(target)
 
     def compute(self) -> Tensor:
-        """ Computes spearmans correlation coefficient. """
+        """Computes spearmans correlation coefficient."""
         preds = torch.cat(self.preds, dim=0)
         target = torch.cat(self.target, dim=0)
         kendall, _ = stats.kendalltau(preds.tolist(), target.tolist())
@@ -71,8 +70,9 @@ class RegressionMetrics(Metric):
         return {
             self.prefix + "_kendall": kendall,
             self.prefix + "_spearman": spearman,
-            self.prefix + "_pearson": pearson,         
+            self.prefix + "_pearson": pearson,
         }
+
 
 class WMTKendall(Metric):
     def __init__(
