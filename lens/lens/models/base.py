@@ -534,7 +534,7 @@ class CometModel(ptl.LightningModule, metaclass=abc.ABCMeta):
                 gpus=gpus,
                 deterministic=True,
                 logger=False,
-                progress_bar_refresh_rate=0,
+                enable_progress_bar=False,
                 accelerator=accelerator,
                 max_epochs=-1,
             )
