@@ -20,9 +20,10 @@ RoBERTa Encoder
 from typing import Dict
 
 import torch
-from lens.encoders.base import Encoder
-from lens.encoders.bert import BERTEncoder
 from transformers import AutoModel, AutoTokenizer
+
+from .base import Encoder
+from .bert import BERTEncoder
 
 
 class RoBERTaEncoder(BERTEncoder):

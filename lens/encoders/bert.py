@@ -20,8 +20,9 @@ BERT Encoder
 from typing import Dict
 
 import torch
-from lens.encoders.base import Encoder
 from transformers import AutoModel, AutoTokenizer
+
+from .base import Encoder
 
 
 class BERTEncoder(Encoder):

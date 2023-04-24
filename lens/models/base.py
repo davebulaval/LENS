@@ -28,8 +28,6 @@ import numpy as np
 import pytorch_lightning as ptl
 import torch
 import transformers
-from lens.encoders import str2encoder
-from lens.modules import LayerwiseAttention
 from packaging import version
 from torch import nn
 from torch.utils.data import DataLoader, RandomSampler, Sampler, Subset
@@ -37,6 +35,8 @@ from torch.utils.data import DataLoader, RandomSampler, Sampler, Subset
 from .lru_cache import tensor_lru_cache
 from .pooling_utils import average_pooling, max_pooling
 from .predict_pbar import PredictProgressBar
+from ..encoders import str2encoder
+from ..modules import LayerwiseAttention
 
 
 class OrderedSampler(Sampler[int]):
@@ -58,7 +58,6 @@ if "COMET_EMBEDDINGS_CACHE" in os.environ:
     CACHE_SIZE = int(os.environ["COMET_EMBEDDINGS_CACHE"])
 else:
     CACHE_SIZE = 1024
-
 
 logger = logging.getLogger(__name__)
 

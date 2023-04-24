@@ -19,12 +19,12 @@ Metrics
     Regression and Ranking metrics to be used during training to measure 
     correlations with human judgements
 """
+from typing import Any, Callable, List, Optional
+
+import scipy.stats as stats
 import torch
 from torch import Tensor
-
 from torchmetrics import Metric
-from typing import Any, Callable, List, Optional
-import scipy.stats as stats
 
 
 class RegressionMetrics(Metric):

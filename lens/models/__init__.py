@@ -14,11 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .regression_metric_multi_ref import RegressionMetricMultiReference
-from .base import CometModel
-
 import os
+
 import yaml
+
+from .base import CometModel
+from .regression_metric_multi_ref import RegressionMetricMultiReference
 
 str2model = {
     "regression_metric_multi_ref": RegressionMetricMultiReference,

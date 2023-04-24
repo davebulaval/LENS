@@ -23,10 +23,11 @@ from typing import Dict, List, Optional, Tuple, Union
 
 import pandas as pd
 import torch
-from lens.models.base import CometModel
-from lens.models.metrics import RegressionMetrics
-from lens.modules import FeedForward
 from transformers.optimization import Adafactor
+
+from .base import CometModel
+from .metrics import RegressionMetrics
+from ..modules import FeedForward
 
 
 class RegressionMetricMultiReference(CometModel):
