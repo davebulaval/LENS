@@ -462,7 +462,6 @@ class CometModel(ptl.LightningModule, metaclass=abc.ABCMeta):
         gpus: int = 1,
         mc_dropout: Union[int, bool] = False,
         progress_bar: bool = True,
-        accelerator: str = "ddp",
         num_workers: int = None,
         length_batching: bool = True,
     ) -> Union[Tuple[List[float], float], Tuple[List[float], List[float], float]]:
@@ -475,7 +474,6 @@ class CometModel(ptl.LightningModule, metaclass=abc.ABCMeta):
         :param gpus: Number of GPUs to be used.
         :param mc_dropout: Number of inference steps to run using MCD. Its disabled by default!
         :param progress_bar: Flag that turns on and off the predict progress bar.
-        :param accelarator: Pytorch Lightning accelerator (e.g: dp, ddp).
         :param num_workers: Number of workers to use when loading data from dataloaders.
         :param length_batching: If set to true, reduces padding by sorting samples by MT length.
 
@@ -512,7 +510,6 @@ class CometModel(ptl.LightningModule, metaclass=abc.ABCMeta):
             collate_fn=self.prepare_for_inference,
             num_workers=num_workers,
         )
-        accelerator = accelerator if gpus > 1 else None
 
         warnings.filterwarnings(
             "ignore",
@@ -525,7 +522,7 @@ class CometModel(ptl.LightningModule, metaclass=abc.ABCMeta):
                 deterministic=True,
                 logger=False,
                 callbacks=[PredictProgressBar()],
-                accelerator=accelerator,
+                accelerator="cuda",
                 max_epochs=-1,
             )
         else:
@@ -534,7 +531,7 @@ class CometModel(ptl.LightningModule, metaclass=abc.ABCMeta):
                 deterministic=True,
                 logger=False,
                 enable_progress_bar=False,
-                accelerator=accelerator,
+                accelerator="cuda",
                 max_epochs=-1,
             )
 
