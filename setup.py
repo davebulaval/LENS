@@ -1,10 +1,12 @@
-from setuptools import setup
+from setuptools import setup, find_packages
+
+packages = find_packages()
 
 setup(
     name="lens",
     version="0.2.0",
     description="A new metric for text simplification",
-    packages=["lens"],
+    packages=packages,
     install_requires=[
         "sentencepiece",
         "pandas",
