@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(
-    name="lens_metric",
+    name="lens",
     version="0.1.0",
     description="A new metric for text simplification",
     author="Mounica Maddela",
