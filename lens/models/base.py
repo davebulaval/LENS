@@ -521,7 +521,7 @@ class CometModel(ptl.LightningModule, metaclass=abc.ABCMeta):
         )
         if progress_bar:
             trainer = ptl.Trainer(
-                gpus=gpus,
+                devices=1,
                 deterministic=True,
                 logger=False,
                 callbacks=[PredictProgressBar()],
@@ -530,7 +530,7 @@ class CometModel(ptl.LightningModule, metaclass=abc.ABCMeta):
             )
         else:
             trainer = ptl.Trainer(
-                gpus=gpus,
+                devices=1,
                 deterministic=True,
                 logger=False,
                 enable_progress_bar=False,
