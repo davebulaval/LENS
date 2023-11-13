@@ -8,10 +8,10 @@ setup(
     description="A new metric for text simplification",
     packages=packages,
     install_requires=[
-        "sentencepiece",
-        "pandas",
+        "sentencepiece>=0.1.96",
+        "pandas>=1.1.5",
         "transformers>=4.8",
-        "pytorch-lightning",
+        "pytorch-lightning>=1.6.0",
         "jsonargparse==3.13.1",
         "torch",
         "numpy >= 1.20.0",
