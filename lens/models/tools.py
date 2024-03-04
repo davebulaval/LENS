@@ -15,6 +15,7 @@
 # limitations under the License.
 
 import os
+from typing import Union
 
 import yaml
 
@@ -26,9 +27,12 @@ str2model = {
 }
 
 
-def load_from_checkpoint(checkpoint_path: str) -> CometModel:
+def load_from_checkpoint(
+    checkpoint_path: str, device: Union[str, None] = None
+) -> CometModel:
     """Loads models from a checkpoint path.
     :param checkpoint_path: Path to a model checkpoint.
+    :param device: device to use to load the mondel on.
 
     :return: Returns a COMET model.
     """
@@ -40,7 +44,9 @@ def load_from_checkpoint(checkpoint_path: str) -> CometModel:
         with open(hparams_file) as yaml_file:
             hparams = yaml.load(yaml_file.read(), Loader=yaml.FullLoader)
         model_class = str2model[hparams["class_identifier"]]
-        model = model_class.load_from_checkpoint(checkpoint_path, **hparams)
+        model = model_class.load_from_checkpoint(
+            checkpoint_path, map_location=device, **hparams
+        )
         return model
     else:
         raise Exception("hparams.yaml file is missing!")

@@ -1,12 +1,13 @@
 import math
+from typing import Union
 
 from .models import load_from_checkpoint
 
 
 class LENS:
-    def __init__(self, path, rescale=False):
+    def __init__(self, path, rescale=False, device: Union[str, None] = None):
         self.rescale = rescale
-        self.model = load_from_checkpoint(path)
+        self.model = load_from_checkpoint(path, device=device)
 
     def score(self, complex, simplified, references, batch_size=16, gpus=1):
         all_data = []

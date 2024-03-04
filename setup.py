@@ -4,7 +4,7 @@ packages = find_packages()
 
 setup(
     name="lens",
-    version="0.2.0",
+    version="0.2.1",
     description="A new metric for text simplification",
     packages=packages,
     install_requires=[
